@@ -10,10 +10,14 @@ app.set('view engine', 'ejs');
 
 app.get("/", function(req,res){
     var today = new Date();
+    var day="";
     if(today.getDay()===6||today.getDay()===0){
-        res.sendFile(__dirname+"/index.html");
+        day = "Weekend";
+        res.render('list', {kindOfDay: day});
     } else {
         //res.sendFile(__dirname+"/index.html");
+        day = "Workday";
+        res.render('list', {kindOfDay: day});
         console.log("darbo diena:(((");
     }
 })
