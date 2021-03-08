@@ -19,6 +19,10 @@
             <li class="list-group-item">Buy food</li>
             <li class="list-group-item">Buy more food</li>
             <li class="list-group-item">Eat all the food</li>
+            <% for(var i=0; i<newTask.length;i++) { %>
+                <li class="list-group-item"> <%= newTask[i] %> </li>
+            <% } %>
+            
             <hr>
             <form action="/" method="POST" class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Add new item" required name="newTask">

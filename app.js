@@ -4,6 +4,8 @@ const https = require("https");
 
 const app = express();
 
+var items = [];
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
@@ -19,11 +21,12 @@ app.get("/", function(req,res){
     var today = new Date();
     var day = today.toLocaleDateString("en-US",options);
     //var day = new Intl.DateTimeFormat('en-US',options).format(today);
-    res.render('list', {kindOfDay: day});
+    res.render('list', {kindOfDay: day, newTask: items});
 })
 
 app.post("/", (req,res)=>{
-    console.log(req.body.newTask);
+    items.push(req.body.newTask);
+    res.redirect("/");
 })
 
 app.listen(3000, ()=>{
