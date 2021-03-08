@@ -9,8 +9,15 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 app.get("/", function(req,res){
+
+    var options = {weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric'};
+
     var today = new Date();
-    var day = new Intl.DateTimeFormat('en-US',{ weekday: 'long'}).format(today);
+    var day = today.toLocaleDateString("en-US",options);
+    //var day = new Intl.DateTimeFormat('en-US',options).format(today);
     res.render('list', {kindOfDay: day});
 })
 

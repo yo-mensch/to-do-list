@@ -1,7 +1,5 @@
-.weekday{
-    color: rgb(15, 29, 133);
-}
 
-.weekend{
+.header{
     color: rgb(60, 5, 148);
+    text-align: center;
 }
