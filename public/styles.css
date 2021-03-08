@@ -1,4 +1,10 @@
-
+.list-group{
+    margin: 10%;
+    padding: 10%;
+}
+.addbtn{
+    margin-right: 5px;
+}
 .header{
     color: rgb(60, 5, 148);
     text-align: center;
