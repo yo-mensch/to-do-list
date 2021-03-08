@@ -10,12 +10,9 @@ app.set('view engine', 'ejs');
 
 app.get("/", function(req,res){
     var today = new Date();
-    if(today.getDay()===6||today.getDay()===0){
-        res.sendFile(__dirname+"/index.html");
-    } else {
-        //res.sendFile(__dirname+"/index.html");
-        console.log("darbo diena:(((");
-    }
+    var day="";
+    day = new Intl.DateTimeFormat('en-US',{ weekday: 'long'}).format(today);
+    res.render('list', {kindOfDay: day});
 })
 
 app.listen(3000, ()=>{
