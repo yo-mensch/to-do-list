@@ -11,12 +11,13 @@ app.set('view engine', 'ejs');
 app.get("/", function(req,res){
     var today = new Date();
     var day="";
+    var options = { weekday: 'long'};
     if(today.getDay()===6||today.getDay()===0){
-        day = "Weekend";
+        day = new Intl.DateTimeFormat('en-US',options).format(today);
         res.render('list', {kindOfDay: day});
     } else {
         //res.sendFile(__dirname+"/index.html");
-        day = "Workday";
+        day = new Intl.DateTimeFormat('en-US',options).format(today);
         res.render('list', {kindOfDay: day});
         console.log("darbo diena:(((");
     }
