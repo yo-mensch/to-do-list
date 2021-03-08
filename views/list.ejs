@@ -14,6 +14,19 @@
 
     <div class="jumbotron jumbotron-fluid container container-fluid">
         <h1 class="header"><%= kindOfDay %></h1>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Buy food</li>
+            <li class="list-group-item">Buy more food</li>
+            <li class="list-group-item">Eat all the food</li>
+            <hr>
+            <form action="/views/list.ejs" method="post" class="input-group mb-3">
+                <div class="input-group-append">
+                    <button class="btn btn-dark addbtn" type="submit">+</button> 
+                </div>
+                <input type="text" class="form-control" placeholder="Add new item" required autofocus name="task">
+            </form>
+        </ul>
     </div>
 </body>
 </html>
