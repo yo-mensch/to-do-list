@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const https = require("https");
 
 const app = express();
@@ -19,6 +20,10 @@ app.get("/", function(req,res){
     var day = today.toLocaleDateString("en-US",options);
     //var day = new Intl.DateTimeFormat('en-US',options).format(today);
     res.render('list', {kindOfDay: day});
+})
+
+app.post("/", (req,res)=>{
+    console.log(req.body.newTask);
 })
 
 app.listen(3000, ()=>{
