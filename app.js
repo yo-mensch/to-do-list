@@ -1,8 +1,10 @@
 const express = require("express");
-const bodyParser = require('body-parser');
-const https = require("https");
+const date = require("./date");
 
 const app = express();
+
+let items = [];
+let workItems=[];
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -10,22 +12,27 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 app.get("/", function(req,res){
+    res.render('list', {listTitle: date(), newTask: items});
+});
 
-    var options = {weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric'};
+app.get("/work", (req,res)=>{
+    res.render("list",{listTitle: "Work list", newTask: workItems});
+});
 
-    var today = new Date();
-    var day = today.toLocaleDateString("en-US",options);
-    //var day = new Intl.DateTimeFormat('en-US',options).format(today);
-    res.render('list', {kindOfDay: day});
+app.get("/about", (req,res)=>{
+    res.render("about");
 })
 
 app.post("/", (req,res)=>{
-    console.log(req.body.newTask);
-})
+    if(req.body.list === "Work"){
+        workItems.push(req.body.newTask);
+        res.redirect("/work");
+    }else{
+        items.push(req.body.newTask);
+        res.redirect("/");
+    }
+});
 
 app.listen(3000, ()=>{
     console.log("hello, listening on port 3000");
-})
+});
