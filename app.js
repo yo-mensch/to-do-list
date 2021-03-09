@@ -1,6 +1,5 @@
 const express = require("express");
-const bodyParser = require('body-parser');
-const https = require("https");
+const date = require("./date");
 
 const app = express();
 
@@ -13,21 +12,16 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 app.get("/", function(req,res){
-
-    let options = {weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric'};
-
-    let today = new Date();
-    let day = today.toLocaleDateString("en-US",options);
-    //var day = new Intl.DateTimeFormat('en-US',options).format(today);
-    res.render('list', {listTitle: day, newTask: items});
+    res.render('list', {listTitle: date(), newTask: items});
 });
 
 app.get("/work", (req,res)=>{
     res.render("list",{listTitle: "Work list", newTask: workItems});
 });
+
+app.get("/about", (req,res)=>{
+    res.render("about");
+})
 
 app.post("/", (req,res)=>{
     if(req.body.list === "Work"){
