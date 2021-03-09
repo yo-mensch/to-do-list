@@ -4,7 +4,7 @@ const https = require("https");
 
 const app = express();
 
-var items = [];
+let items = [];
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -13,13 +13,13 @@ app.set('view engine', 'ejs');
 
 app.get("/", function(req,res){
 
-    var options = {weekday: 'long', 
+    let options = {weekday: 'long', 
     year: 'numeric', 
     month: 'long', 
     day: 'numeric'};
 
-    var today = new Date();
-    var day = today.toLocaleDateString("en-US",options);
+    let today = new Date();
+    let day = today.toLocaleDateString("en-US",options);
     //var day = new Intl.DateTimeFormat('en-US',options).format(today);
     res.render('list', {kindOfDay: day, newTask: items});
 })
