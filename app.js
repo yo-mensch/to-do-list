@@ -5,6 +5,7 @@ const https = require("https");
 const app = express();
 
 let items = [];
+let workItems=[];
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -21,14 +22,23 @@ app.get("/", function(req,res){
     let today = new Date();
     let day = today.toLocaleDateString("en-US",options);
     //var day = new Intl.DateTimeFormat('en-US',options).format(today);
-    res.render('list', {kindOfDay: day, newTask: items});
-})
+    res.render('list', {listTitle: day, newTask: items});
+});
+
+app.get("/work", (req,res)=>{
+    res.render("list",{listTitle: "Work list", newTask: workItems});
+});
 
 app.post("/", (req,res)=>{
-    items.push(req.body.newTask);
-    res.redirect("/");
-})
+    if(req.body.list === "Work"){
+        workItems.push(req.body.newTask);
+        res.redirect("/work");
+    }else{
+        items.push(req.body.newTask);
+        res.redirect("/");
+    }
+});
 
 app.listen(3000, ()=>{
     console.log("hello, listening on port 3000");
-})
+});

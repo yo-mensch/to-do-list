@@ -47,12 +47,18 @@ body {
     right: 0;
     text-align: center;
 }
-
+.itemm{
+    display: flex;
+    align-items: center;
+    margin-top: 7%;
+    text-align: center;
+}
 .item {
-    min-height: 70px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid #F1F1F1;
+    margin-top: auto;
+    text-align: center;
 }
 
 .item:last-child {
@@ -65,7 +71,7 @@ input:checked+p {
 }
 
 input[type="checkbox"] {
-    margin: 20px;
+    margin: 19px;
 }
 
 form {
@@ -88,7 +94,7 @@ input[type="text"] {
     text-align: center;
     height: 60px;
     border: none;
-    background: transparent;
+    /* background: transparent; */
     font-size: 20px;
     font-weight: 200;
     width: 313px;
@@ -103,3 +109,11 @@ input[type="text"]:focus {
     color: grey;
     opacity: 1;
 }
+footer {
+    background-color: transparent;
+    /* color: white; */
+    /* color: rgba(0, 0, 0, 0.5); */
+    text-align: center;
+    position: relative;
+    bottom: 0;
+  }
