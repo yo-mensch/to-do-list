@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 app.get("/", function(req,res){
-    res.render('list', {listTitle: date(), newTask: items});
+    res.render('list', {listTitle: date.getDate(), newTask: items});
 });
 
 app.get("/work", (req,res)=>{
