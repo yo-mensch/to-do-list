@@ -4,11 +4,11 @@
     <h1 class="header"><%= listTitle %></h1>
 
     <ul class="list-group list-group-rounded">
-        <% for(let i=0; i<newTask.length;i++) { %>
+        <% newTask.forEach((item) => {  %>
         <span class="list-group-item item"><input type="checkbox">
-            <p class="itemm"> <%= newTask[i] %> </p>
+            <p class="itemm"> <%= item.content %> </p>
         </span>
-        <% } %>
+        <% }) %>
 
         <hr>
         <form action="/" method="POST" class="input-group mb-3">
