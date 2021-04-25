@@ -5,9 +5,12 @@
 
     <ul class="list-group list-group-rounded">
         <% newTask.forEach((item) => {  %>
-        <span class="list-group-item item"><input type="checkbox">
-            <p class="itemm"> <%= item.content %> </p>
-        </span>
+        <form action="/delete" method="POST">
+            <span class="list-group-item item">
+                <input type="checkbox" name="checkbox" value="<%= item._id %>"onchange="this.form.submit()">
+                <p class="itemm"> <%= item.content %> </p>
+            </span>
+        </form>
         <% }) %>
 
         <hr>

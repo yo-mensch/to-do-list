@@ -75,7 +75,7 @@ input[type="checkbox"] {
     margin: 19px;
 }
 
-form {
+form.input-group{
     text-align: center;
 }
 #par{
