@@ -11,7 +11,8 @@ app.set('view engine', 'ejs');
 
 mongoose.connect("mongodb://localhost:27017/toDoListDB",{
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify:false
 })
 
 const listItemSchema = new mongoose.Schema({
@@ -53,7 +54,7 @@ app.get("/", function(req,res){
                 })
                 res.redirect('/');
             } else{
-                res.render('list', {listTitle: "Today", newTask: foundItems});
+                res.render('list', {listTitle: date.getDate(), newTask: foundItems});
             }
         }
     })
@@ -76,29 +77,18 @@ app.get("/:customListName",(req,res)=>{
             } else{
                 res.render("list", {listTitle: customListName, newTask: foundList.items});
             }
-            //res.redirect("/:customListName");
         }
     })
     
 })
 
-
-/*app.get("/work", (req,res)=>{
-    res.render("list",{listTitle: "Work list", newTask: workItems});
-});
-
-app.get("/about", (req,res)=>{
-    res.render("about");
-})*/
-
 app.post("/", (req,res)=>{
     const listName = req.body.list;
-    //console.log(req.body);
     const newItem = new Item({
         content: req.body.newTask
     });
 
-    if(listName==="Today"){
+    if(listName===date.getDate()){
         Item.create({content: newItem.content},(err)=>{
             if(err) console.log(err);
         })
@@ -117,10 +107,21 @@ app.post("/", (req,res)=>{
 
 app.post("/delete",(req,res)=>{
     const checkedItemId = req.body.checkbox;
-    Item.deleteOne({_id: checkedItemId},(err)=>{
-        if(err) console.log(err);
-    })
-    res.redirect('/');
+    const listName = req.body.listName;
+    //console.log(checkedItemId+" "+listName);
+    if(listName===date.getDate()){
+        Item.deleteOne({_id: checkedItemId},(err)=>{
+            if(err) console.log(err);
+        })
+        res.redirect('/');
+    } else {
+        List.findOneAndUpdate({name: listName},
+            {$pull:{items :{_id: checkedItemId}}},
+            (err,foundList)=>{
+            if(err) console.log(err);
+            else res.redirect("/"+listName);
+        })
+    }
 })
 
 app.listen(3000, ()=>{
