@@ -10,7 +10,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
-mongoose.connect("mongodb://localhost:27017/toDoListDB",{
+mongoose.connect("mongodb+srv://admin-rarsa:Test866524434@todolist.kwn0c.mongodb.net/toDoListDB",{
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify:false
