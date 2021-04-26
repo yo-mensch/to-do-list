@@ -31,6 +31,13 @@ const item3 = new Item({
 })
 const defaultItems = [item1, item2, item3];
 
+const listSchema = new mongoose.Schema({
+    name: String,
+    items: [listItemSchema]
+})
+
+const List = new mongoose.model("list", listSchema);
+
 app.get("/", function(req,res){
 
     Item.find((err, foundItems)=>{
@@ -46,28 +53,66 @@ app.get("/", function(req,res){
                 })
                 res.redirect('/');
             } else{
-                res.render('list', {listTitle: date.getDate(), newTask: foundItems});
+                res.render('list', {listTitle: "Today", newTask: foundItems});
             }
         }
     })
 });
 
-app.get("/work", (req,res)=>{
+app.get("/:customListName",(req,res)=>{
+    const customListName = req.params.customListName;
+
+    List.findOne({name: customListName},(err, foundList)=>{
+        if(err) console.log(err);
+        else{
+            if(!foundList){
+                const list =new List({
+                    name: customListName,
+                    items: defaultItems
+                });
+            
+                list.save();
+                res.redirect("/"+customListName);
+            } else{
+                res.render("list", {listTitle: customListName, newTask: foundList.items});
+            }
+            //res.redirect("/:customListName");
+        }
+    })
+    
+})
+
+
+/*app.get("/work", (req,res)=>{
     res.render("list",{listTitle: "Work list", newTask: workItems});
 });
 
 app.get("/about", (req,res)=>{
     res.render("about");
-})
+})*/
 
 app.post("/", (req,res)=>{
+    const listName = req.body.list;
+    //console.log(req.body);
     const newItem = new Item({
         content: req.body.newTask
     });
-    Item.create({content: newItem.content},(err)=>{
-        if(err) console.log(err);
-    })
-    res.redirect("/");
+
+    if(listName==="Today"){
+        Item.create({content: newItem.content},(err)=>{
+            if(err) console.log(err);
+        })
+        res.redirect("/");
+    } else {
+        List.findOne({name: listName},(err,foundList)=>{
+            if(err) console.log(err);
+            foundList.items.push(newItem);
+            foundList.save();
+            res.redirect("/"+listName);
+        })
+    }
+
+    
 });
 
 app.post("/delete",(req,res)=>{
